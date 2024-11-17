@@ -1,4 +1,6 @@
-# Algorithm MT19937
+import time
+
+#Algorithm MT19937
 w, n, m, r = 32, 624, 397, 31
 a = 0x9908B0DF
 u, d = 11, 0xFFFFFFFF
@@ -46,19 +48,12 @@ class MT19937:
 
         return self.temper(y)
 
-# Step 1: Initialize the MT19937 with a seed based on the current time
-import time
-
-# Initial seed using system time
 initial_seed = int(time.time())
 mt_initial = MT19937(seed=initial_seed)
 
-# Step 2: Generate a new seed using the Twister
 new_seed = mt_initial.extract_number()
 
-# Step 3: Re-initialize the Twister with the new seed
 mt = MT19937(seed=new_seed)
 
-# Step 4: Generate and print random numbers between 1 and 3
 random_numbers = [(mt.extract_number() % 3) + 1 for _ in range(10)]
 print("Random numbers between 1 and 3:", random_numbers)
