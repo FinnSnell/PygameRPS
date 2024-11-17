@@ -17,11 +17,13 @@ hover_col = (75, 225, 255)
 click_col = (50, 150, 255)
 text_col = (0, 0, 0)
 
-# Initialize variables
-playerWin = -1 
-aiSelection = ""  
-playerSelection = "rock" 
-endText = ""
+ranNum = random.randint(1,3)
+if ranNum == 1:
+    aiSelection = "rock"
+if ranNum == 2:
+    aiSelection = "scissors"
+if ranNum == 3:
+    aiSelection = "paper"
 
 # Font
 font = pygame.font.Font(None, 40)
@@ -74,6 +76,7 @@ main = True
 game = False
 clicked = False
 while main:
+    global playerSelection
     screen.fill(white)  # Clear screen
 
     # Event Handling
@@ -83,15 +86,15 @@ while main:
 
     # Draw buttons and handle actions
     if rock.draw_button():
-        playerSelection = rock
+        playerSelection = "rock"
         game = True
         main = False
     if scissors.draw_button():
-        playerSelection = scissors
+        playerSelection = "scissors"
         game = True
         main = False
     if paper.draw_button():
-        playerSelection = paper
+        playerSelection = "paper"
         game = True
         main = False
 
@@ -103,35 +106,42 @@ while game:
     # Event Handling
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            main = False
-    
-    ranNum = random.randint(1,3)
-    if ranNum == 1:
-        aiSelection = rock
-    if ranNum == 2:
-        aiSelection = scissors
-    if ranNum == 1:
-        aiSelection = paper
+            game = False
 
-    if playerSelection is rock and aiSelection is rock or playerSelection is paper and aiSelection is paper or playerSelection is scissors and aiSelection is scissors:
-        playerWin = 2
-    if playerSelection is rock and aiSelection is scissors or playerSelection is paper and aiSelection is rock or playerSelection is scissors and aiSelection is paper:
-        playerWin = 1
-    if playerSelection is rock and aiSelection is paper or playerSelection is paper and aiSelection is scissors or playerSelection is scissors and aiSelection is rock:
-        playerWin = 0
+    if playerSelection == "rock":
+        if aiSelection == "rock":
+            win = "draw"
+        elif aiSelection == "scissors":
+            win = "win"
+        elif aiSelection == "paper":
+            win = "lose"
+    elif playerSelection == "paper":
+        if aiSelection == "paper":
+            win = "draw"
+        elif aiSelection == "rock":
+            win = "win"
+        elif aiSelection == "scissors":
+            win = "lose"
+    elif playerSelection == "scissors":
+        if aiSelection == "scissors":
+            win = "draw"
+        elif aiSelection == "paper":
+            win = "win"
+        elif aiSelection == "rock":
+            win = "lose"
 
-    if playerWin == 2:
+    if win == "draw":
         endText = ("You Selected ", playerSelection, "Your Opponent Selected", aiSelection, "The Game Is A Draw.")
-    if playerWin == 1:
+    elif win == "lose":
         endText = ("You Selected ", playerSelection, "Your Opponent Selected", aiSelection, "The Game Is A Loss.")
-    if playerWin == 2:
+    elif win == "win":
         endText = ("You Selected ", playerSelection, "Your Opponent Selected", aiSelection, "The Game Is A Win.")
     else:
         print('error')
 
-    finalText = font.render(endText, True, black)
+    finalText = font.render(str(endText), True, black)
     textRect = finalText.get_rect()
-    textRect.center = (400 // 2, 400 // 2)
+    textRect.center = (600, 400)
     screen.blit(finalText, textRect)
 
     pygame.display.flip()
