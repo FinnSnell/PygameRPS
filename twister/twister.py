@@ -48,12 +48,26 @@ class MT19937:
 
         return self.temper(y)
 
-initial_seed = int(time.time())
-mt_initial = MT19937(seed=initial_seed)
+def generate_randomness():
+    global randomness
+    initial_seed = int(time.time())
+    mt_initial = MT19937(seed=initial_seed)
 
-new_seed = mt_initial.extract_number()
+    new_seed = mt_initial.extract_number()
 
-mt = MT19937(seed=new_seed)
+    mt = MT19937(seed=new_seed)
 
-random_numbers = [(mt.extract_number() % 3) + 1 for _ in range(10)]
-print("Random numbers between 1 and 3:", random_numbers)
+    randomness = [(mt.extract_number()) % 10 + 1 for _ in range(1)]
+    return randomness
+
+def generate_number():
+    global random_numbers
+    initial_seed = int(time.time())
+    mt_initial = MT19937(seed=initial_seed)
+
+    new_seed = mt_initial.extract_number()
+
+    mt = MT19937(seed=new_seed)
+
+    random_numbers = [(mt.extract_number() % 3) + 1 for _ in range(10)]
+    return random_numbers
