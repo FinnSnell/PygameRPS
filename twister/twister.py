@@ -57,7 +57,7 @@ def generate_randomness():
 
     mt = MT19937(seed=new_seed)
 
-    randomness = [(mt.extract_number()) % 10 + 1 for _ in range(1)]
+    randomness = [(mt.extract_number()) % 10 for _ in range(1)]
     return randomness
 
 def generate_number():
