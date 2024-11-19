@@ -50,14 +50,14 @@ class MT19937:
 
 def generate_randomness():
     global randomness
-    initial_seed = int(time.time())
+    initial_seed = int(time.time()*1000000)
     mt_initial = MT19937(seed=initial_seed)
 
     new_seed = mt_initial.extract_number()
 
     mt = MT19937(seed=new_seed)
 
-    randomness = [(mt.extract_number()) % 10 for _ in range(1)]
+    randomness = [(mt.extract_number()) % 100 for _ in range(1)]
     return randomness
 
 def generate_number():
@@ -69,5 +69,5 @@ def generate_number():
 
     mt = MT19937(seed=new_seed)
 
-    random_numbers = [(mt.extract_number() % 3) + 1 for _ in range(10)]
+    random_numbers = [(mt.extract_number() % 3) + 1 for _ in range(100)]
     return random_numbers
